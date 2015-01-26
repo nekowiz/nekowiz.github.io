@@ -2,75 +2,113 @@
 <html>
 <head>
 <meta charset='utf-8' />
-<link href='/fullcalendar.css' rel='stylesheet' />
-<link href='/fullcalendar.print.css' rel='stylesheet' media='print' />
-<script src='/lib/moment.min.js'></script>
-<script src='/lib/jquery.min.js'></script>
-<script src='/fullcalendar.min.js'></script>
+<link rel='stylesheet' href='./lib/eggplant/jquery-ui.min.css' />
+<link href='./fullcalendar.css' rel='stylesheet' />
+<link href='./fullcalendar.print.css' rel='stylesheet' media='print' />
+<link href='./lib/qtip/jquery.qtip.min.css' rel='stylesheet' />
+<script src='./lib/moment.min.js'></script>
+<script src='./lib/jquery.min.js'></script>
+<script src='./fullcalendar.min.js'></script>
+<script src='./lang-all.js'></script>
+<script src='./lib/qtip/jquery.qtip.min.js'></script>
+<script src="./event.js"></script>
 <script>
+
+function setTimeline(){
+ if(jQuery(".timeline").length == 0){
+      jQuery(".fc-time-grid-container").prepend("<div style='width:100%;overflow: visible;'><hr class='timeline'/></div>") 
+    }
+    var timeline = jQuery(".timeline");  
+
+    if(jQuery(".fc-today").length <= 0){
+        timeline.hide()
+        return;
+    }
+    else{
+      timeline.show()
+    }
+
+    var now = moment();
+    var day = parseInt(now.format("e"));
+    var width =  jQuery(".fc-minor").width();
+    var height =  jQuery(".fc-today:last").height();
+    var left = (day*width) + jQuery(".fc-axis").outerWidth()-1;
+    var top = ( (now.hours()*3600)+(now.minutes()*60)+now.seconds() )/86400;
+
+    top = height*top-2;
+    timeline
+    .css('width',width+"px")
+    .css('top',top+"px") 
+} 
 
 	$(document).ready(function() {
 
 		$('#calendar').fullCalendar({
-			defaultDate: '2014-11-12',
-			editable: true,
-			eventLimit: true, // allow "more" link when too many events
-			events: [
-				{
-					title: 'All Day Event',
-					start: '2014-11-01'
-				},
-				{
-					title: 'Long Event',
-					start: '2014-11-07',
-					end: '2014-11-10'
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: '2014-11-09T16:00:00'
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: '2014-11-16T16:00:00'
-				},
-				{
-					title: 'Conference',
-					start: '2014-11-11',
-					end: '2014-11-13'
-				},
-				{
-					title: 'Meeting',
-					start: '2014-11-12T10:30:00',
-					end: '2014-11-12T12:30:00'
-				},
-				{
-					title: 'Lunch',
-					start: '2014-11-12T12:00:00'
-				},
-				{
-					title: 'Meeting',
-					start: '2014-11-12T14:30:00'
-				},
-				{
-					title: 'Happy Hour',
-					start: '2014-11-12T17:30:00'
-				},
-				{
-					title: 'Dinner',
-					start: '2014-11-12T20:00:00'
-				},
-				{
-					title: 'Birthday Party',
-					start: '2014-11-13T07:00:00'
-				},
-				{
-					title: 'Click for Google',
-					url: 'http://google.com/',
-					start: '2014-11-28'
+			lang: 'zh-tw',
+			theme:true,
+			editable: false,
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek'
+			},
+			views: {
+				month: { // name of view
+					titleFormat: 'YYYY 年 MM 月'
+					// displayEventEnd: true
+					// other view-specific options here
 				}
-			]
+			},
+			axisFormat: "HH:mm",
+			scrollTime: moment.max(moment().startOf('day'), moment().subtract(3, 'hours')).format("HH:mm"),
+			defaultView: 'agendaWeek',
+			timeFormat: 'HH:mm',
+			eventLimit: true, // allow "more" link when too many events
+			eventRender: function(event, element) {
+				element.qtip({
+					position: {
+						my: 'top left',
+						at: 'bottom right',
+						target: 'mouse',
+						adjust: {x:15, y:15}
+					},
+					content: {
+						title: function (e) { 
+							var start_m = moment(event.start);
+							var end_m = moment(event.end);
+							// check same day
+							var is_same_day = ((start_m.dayOfYear() == end_m.dayOfYear()) && (start_m.year() == end_m.year()));
+							// check all day
+							if (start_m.hour() == 0 && start_m.minute() == 0 && end_m.hour() == 0 && end_m.minute() == 0) {
+								if (end_m.diff(start_m, 'days') == 1) {
+									return start_m.format("MM月DD日");
+								} else {
+									return start_m.format("MM月DD日") + " ~ " + end_m.format("MM月DD日");
+								}
+							} else {
+								if (is_same_day) {
+									return start_m.format("HH:mm") + " ~ " + end_m.format("HH:mm");
+								} else {
+									return start_m.format("MM月DD日 HH:mm") + " ~ " + end_m.format("MM月DD日 HH:mm");
+								}
+							}
+						},
+						text: event.title
+					},
+					style: {
+						classes: 'qtip-rounded qtip-shadow'
+					}
+				});
+			},
+			style: {
+				classes: 'qtip-blue qtip-shadow'
+			},
+			viewRender: function (view) {
+				try {
+					setTimeline();
+				} catch (err) {}
+			},
+			events: wizneko_events
 		});
 		
 	});
@@ -88,6 +126,20 @@
 	#calendar {
 		max-width: 900px;
 		margin: 0 auto;
+	}
+	
+	.timeline {
+		position: absolute;    
+		border:0; height:1px;
+		background-color:red;
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		z-index: 999;
+	}
+	
+	.fc-month-view .fc-more{
+		color: red;
 	}
 
 </style>
