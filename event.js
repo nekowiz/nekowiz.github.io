@@ -38,6 +38,13 @@ var wizneko_events = [
 	start: "2015-01-23",
 	end: "2015-02-05",
 	backgroundColor: "DarkBlue"
+},
+{
+	title: "庫洛姆‧麥格納魔導學園",
+	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E5%BA%AB%E6%B4%9B%E5%A7%86%E2%80%A7%E9%BA%A5%E6%A0%BC%E7%B4%8D%E9%AD%94%E5%B0%8E%E5%AD%B8%E5%9C%92",
+	start: "2015-01-30",
+	end: "2015-02-12",
+	backgroundColor: "DarkRed"
 }
 ];
 
