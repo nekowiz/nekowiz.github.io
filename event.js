@@ -45,6 +45,13 @@ var wizneko_events = [
 	start: "2015-01-30",
 	end: "2015-02-12",
 	backgroundColor: "DarkRed"
+},
+{
+	title: "巧克力森林",
+	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E5%B7%A7%E5%85%8B%E5%8A%9B%E6%A3%AE%E6%9E%97",
+	start: "2015-02-05",
+	end: "2015-02-15",
+	backgroundColor: "DarkBlue"
 }
 ];
 
