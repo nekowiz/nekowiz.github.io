@@ -2,7 +2,7 @@ window.onload = function() {
   init();
 };
 
-var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1Phm6RTSNWfgvC7TlBdBVe-1C4afPYTPyR_557qHRaoY/pubhtml?gid=0&single=true';
+var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1Phm6RTSNWfgvC7TlBdBVe-1C4afPYTPyR_557qHRaoY/pubhtml';
 
 function init() {
   Tabletop.init( { key: public_spreadsheet_url,
@@ -25,7 +25,7 @@ function showInfo(data, tabletop) {
       } else {
         var element_name = "#quest_normal_" + id + "_" + key_value_mapping[k];
         var element = $(element_name);
-        if (element.data("type") == "link) {
+        if (element.data("type") == "link") {
           element.append("<a></a>");
           var a_node = element.find("a");
           var page_name = "¤@¯ë¥ô°È/" + value;
