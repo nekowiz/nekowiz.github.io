@@ -52,6 +52,13 @@ var wizneko_events = [
 	start: "2015-02-05",
 	end: "2015-02-16",
 	backgroundColor: "DarkBlue"
+},
+{
+	title: "異界神的祝福試煉",
+	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E7%95%B0%E7%95%8C%E7%A5%9E%E7%9A%84%E7%A5%9D%E7%A6%8F%E8%A9%A6%E7%85%89",
+	start: "2015-02-16",
+	end: "2015-02-27",
+	backgroundColor: "green"
 }
 ];
 
