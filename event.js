@@ -57,8 +57,15 @@ var wizneko_events = [
 	title: "異界神的祝福試煉",
 	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E7%95%B0%E7%95%8C%E7%A5%9E%E7%9A%84%E7%A5%9D%E7%A6%8F%E8%A9%A6%E7%85%89",
 	start: "2015-02-16",
-	end: "2015-02-27",
+	end: "2015-03-06",
 	backgroundColor: "green"
+},
+{
+	title: "桃娘傳",
+	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E6%A1%83%E5%A8%98%E5%82%B3",
+	start: "2015-02-26",
+	end: "2015-03-19",
+	backgroundColor: "DarkBlue"
 }
 ];
 
