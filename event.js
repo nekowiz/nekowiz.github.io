@@ -66,6 +66,13 @@ var wizneko_events = [
 	start: "2015-02-26",
 	end: "2015-03-19",
 	backgroundColor: "DarkBlue"
+},
+{
+	title: "珍妮佛的冒險",
+	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E7%8F%8D%E5%A6%AE%E4%BD%9B%E7%9A%84%E5%86%92%E9%9A%AA",
+	start: "2015-03-05",
+	end: "2015-03-25",
+	backgroundColor: "green"
 }
 ];
 
