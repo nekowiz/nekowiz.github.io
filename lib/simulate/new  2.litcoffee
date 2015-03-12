@@ -483,4 +483,4 @@ $ ->
 	for i in [1..7]
 		index = "#attack_#{i}"
 		$(index).on "click", ->
-			attack_penal($(index).text())
+			attack_penal($(this).text())
