@@ -4,6 +4,8 @@ randomNum = (max,min=0) ->
 cards = []
 combo = 0
 panel_color = 1
+current_stage = 0
+current_enemies = []
 
 check_all_cards_loaded = () ->
 	for card in cards
@@ -107,6 +109,7 @@ class Card
 				@current_hp += atk_value * @attack_info.life_drain
 				if @current_hp >= @max_hp
 					@current_hp = @max_hp
+				@current_hp = Math.floor(@current_hp)
 							
 			# 打全體
 			else
@@ -122,7 +125,7 @@ class Card
 					enemy.damage(atk, @prop)
 		
 	attack_info_set: (prop, as_enable) ->
-		if @prop == prop
+		if prop.indexOf(@prop) != -1
 			if as_enable
 				switch @as_data.type
 					when "攻擊上升"
@@ -204,6 +207,15 @@ class Card
 		@attack_info.prop_atk = ""
 		@attack_info.prop_atk_ratio = 1
 		@attack_info.life_drain = 0
+	damage: (atk, prop) ->
+		atk_value = atk * props[prop][@prop]
+		if atk_value > @current_hp
+			atk_value = @current_hp
+		atk_value = Math.floor(atk_value)
+		@current_hp -= atk_value
+		return atk_value
+	is_dead: () ->
+		return @current_hp == 0
 				
 
 load_cards = () ->
@@ -292,12 +304,42 @@ class Enemy
 		atk_value = atk * props[prop][@prop]
 		if atk_value > @current_hp
 			atk_value = @current_hp
+		atk_value = Math.floor(atk_value)
 		@current_hp -= atk_value
 		return atk_value
-	attack: () ->
-		# 檢查 buffs
-		return @atk
+	one_turn_pass: () ->
+		if not @is_dead()
+			@current_turn -= 1
+	use_skill: () ->
+		current_ai = @ai[@current_ai_index]
 		
+		# if current_ai == 0
+		
+		@current_ai_index += 1
+		@current_ai_index %= @ai.length
+	attack: () ->
+		# 檢查 ai
+		current_ai = @ai[@current_ai_index]
+		if current_ai == 0
+			# 普通攻擊，無技能影響，隨機選定目標
+			attack_count = 0
+			for i in ([0..4].sort () -> 0.5 - Math.random())
+				if attack_count == @target
+					break
+				if not cards[i].is_dead()
+					cards[i].damage(@atk, @prop)
+					attack_count += 1
+		if @current_turn == 0
+			@current_turn = @turn
+			
+enemies_one_turn_pass = () ->
+	for enemy in current_enemies
+		enemy.one_turn_pass()
+	for enemy in current_enemies
+		enemy.use_skill()
+	for enemy in current_enemies
+		enemy.attack()
+	
 
 inital_enemy_data = (stage) ->
 	return (new Enemy enemy for enemy in stage)
@@ -308,8 +350,25 @@ check_stage_clear = (enemies) ->
 			return false
 	return true
 
+check_stage_fail = () ->
+	for card in cards
+		if not card.is_dead()
+			return false
+	return true
+
+enable_attacks = () ->
+	for i in [1..7]
+		index = "#attack_#{i}"
+		$(index).attr("disabled", false);
+		
+disable_attacks = () ->
+	for i in [1..7]
+		index = "#attack_#{i}"
+		$(index).attr("disabled", true);
+	
 player_action = () ->
-	enable_skills()
+	load_card_info_to_input()
+	# enable_skills()
 	enable_attacks()
 
 ###
@@ -332,9 +391,6 @@ player_use_skill = (skill) ->
 			return
 ###
 
-current_stage = 0
-current_enemies = []
-
 player_attack = (prop, as_enable=true) ->
 	for card in cards[..-2]
 		card.attack(prop, as_enable)
@@ -343,6 +399,9 @@ player_attack = (prop, as_enable=true) ->
 play_stage = (stage) ->
 	current_enemies = inital_enemy_data stage
 	load_enemy_info_to_input()
+	# 重設 target
+	for card in cards[..-2]
+		card.target_reset()
 	player_action()
 	###
 	enemy_action()
@@ -369,7 +428,55 @@ start = () ->
 	load_card_info_to_input()
 	current_stage = 0
 	play_stage(stages[current_stage])
+	
+stage_all_clear = () ->
+	console.log("All stage cleared!!")
+	
+attack_penal = (prop) ->
+	disable_attacks()
+	as_enable = $("#as_enable").is(":checked")
+	for card in cards[..-2]
+		card.attack_info_reset()
+	for card in cards[..-2]
+		card.attack_info_set(prop, as_enable)
+	for card in cards[..-2]
+		card.attack(current_enemies)
+		if check_stage_clear(current_enemies)
+			break
+	# 更新怪物 hp
+	load_enemy_info_to_input()
+	# 檢查是否過關
+	if check_stage_clear(current_enemies)
+		current_stage += 1
+		if current_stage > stages.length
+			stage_all_clear()
+		else
+			play_stage(stages[current_stage])
+	else
+		# 換怪物攻擊
+		enemies_one_turn_pass()
+		# 檢查是否有援助進來
+		if not cards[5].is_dead()
+			for card,index in cards[..-2]
+				if card.is_dead()
+					tmp = cards[5]
+					cards[5] = cards[index]
+					cards[index] = tmp
+					break
+			
+		# 檢查是否全滅
+		if check_stage_fail()
+			console.log("Stage failed!!")
+		else
+			# 換玩家行動
+			player_action()
+			
+	
 
 $ ->
 	$("#load_card").on "click", ->
 		load_cards()
+	for i in [1..7]
+		index = "#attack_#{i}"
+		$(index).on "click", ->
+			attack_penal($(index).text())
