@@ -400,7 +400,7 @@ play_stage = (stage) ->
 	current_enemies = inital_enemy_data stage
 	load_enemy_info_to_input()
 	# 重設 target
-	for card in cards[..-2]
+	for card in cards
 		card.target_reset()
 	player_action()
 	###
