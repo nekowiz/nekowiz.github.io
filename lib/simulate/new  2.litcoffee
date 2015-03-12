@@ -5,6 +5,12 @@ cards = []
 combo = 0
 panel_color = 1
 
+check_all_cards_loaded = () ->
+	for card in cards
+		if card.load_done == false
+			return
+	start()
+
 class Card
 	constructor: (@id) ->
 		# Call ajax to find card hp, atk, as, ss
@@ -72,7 +78,8 @@ class Card
 										_this["ss_data"][index] = value
 				@buffs = []
 				@attack_info = {}
-				@load_done = true #
+				@load_done = true
+				check_all_cards_loaded()
 	attack: (enemies) ->
 		for i in [1..@attack_info.atk_times]
 			# 打單體
@@ -332,6 +339,7 @@ player_attack = (prop, as_enable=true) ->
 
 play_stage = (stage) ->
 	current_enemies = inital_enemy_data stage
+	load_enemy_info_to_input()
 	player_action()
 	###
 	enemy_action()
@@ -343,7 +351,21 @@ play_stage = (stage) ->
 current_stage = 0
 current_enemies = []
 
+load_card_info_to_input = () ->
+	for i in [1..6]
+		hp_index = "#card#{i}_hp"
+		atk_index = "#card#{i}_atk"
+		$(hp_index).val(cards[i-1].current_hp)
+		$(atk_index).val(cards[i-1].max_atk)
+
+load_enemy_info_to_input = () ->
+	i = 1
+	for enemy in current_enemies
+		hp_index = "#enemy#{i}_hp"
+		$(hp_index).val(enemy.current_hp)
+
 start = () ->
+	load_card_info_to_input()
 	current_stage = 0
 	play_stage(stages[current_stage])
 
