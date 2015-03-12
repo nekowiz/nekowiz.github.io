@@ -200,7 +200,7 @@ class Card
 				
 
 load_cards = () ->
-	for i in [1..5]
+	for i in [1..6]
 		card_id = $("#card#{i}").val()
 		cards[i-1] = new Card card_id
 
@@ -346,33 +346,7 @@ current_enemies = []
 start = () ->
 	current_stage = 0
 	play_stage(stages[current_stage])
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
+$ ->
+	$("#load_card").on "click", ->
+		load_cards()
