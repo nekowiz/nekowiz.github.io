@@ -332,6 +332,9 @@ player_use_skill = (skill) ->
 			return
 ###
 
+current_stage = 0
+current_enemies = []
+
 player_attack = (prop, as_enable=true) ->
 	for card in cards[..-2]
 		card.attack(prop, as_enable)
@@ -347,9 +350,6 @@ play_stage = (stage) ->
 		gameover()
 		return false
 	###
-		
-current_stage = 0
-current_enemies = []
 
 load_card_info_to_input = () ->
 	for i in [1..6]
