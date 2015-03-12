@@ -72,10 +72,49 @@ class Card
 										_this["ss_data"][index] = value
 				@buffs = []
 				@attack_info = {}
-				@load_done = true
-	get_damage: (enemy_prop) ->
-		prop_ratio = props.@prop.enemy_prop
-	attack: (prop, as_enable) ->
+				@load_done = true #
+	attack: (enemies) ->
+		for i in [1..@attack_info.atk_times]
+			# 打單體
+			if @attack_info.target_num == 1
+				target_enemy = enemies[0]
+				if @target != -1
+					if enemies[@target].is_dead()
+						@target = -1
+				if @target == -1
+					for enemy in enemies
+						if not enemy.is_dead()
+							target_enemy = enemy
+							break
+				else
+					target_enemy = enemies[@target]
+				
+				attack_ratio = @attack_info.atk_ratio
+				# 檢查屬性特攻
+				if @attack.info.prop_atk.indexOf(enemy.prop) != -1
+					attack_ratio *= @attack_info.prop_atk_ratio
+				
+				atk = Math.floor(@max_atk * attack_ratio * (100 + combo) / 100)
+				atk_value = enemy.damage(atk, @prop)
+				# 吸血
+				@current_hp += atk_value * @attack_info.life_drain
+				if @current_hp >= @max_hp
+					@current_hp = @max_hp
+							
+			# 打全體
+			else
+				atk = @max_atk * @attack_info.atk_ratio * (100 + combo) / 100
+				enemies_alive_count = 0
+				for enemy in enemies
+					if not enemy.is_dead()
+						enemies_alive_count += 1
+				if @attack_info.target_all_average != 0
+					atk /= enemies_alive_count
+				atk = Math.floor(atk)
+				for enemy in enemies
+					enemy.damage(atk, @prop)
+		
+	attack_info_set: (prop, as_enable) ->
 		if @prop == prop
 			if as_enable
 				switch @as_data.type
@@ -236,14 +275,18 @@ class Enemy
 		@target = enemy_data[3]
 		@atk = enemy_data[4]
 		@ai = enemy_data[5]
+		@name = monsters[@id].name
+		@prop = monsters[@id].prop
 		@current_ai_index = 0
 		@buffs = []
 	is_dead: () ->
 		return @current_hp == 0
 	damage: (atk, prop) ->
-		@current_hp -= atk * props[prop][@prop]
-		if @current_hp <= 0
-			@current_hp = 0
+		atk_value = atk * props[prop][@prop]
+		if atk_value > @current_hp
+			atk_value = @current_hp
+		@current_hp -= atk_value
+		return atk_value
 	attack: () ->
 		# 檢查 buffs
 		return @atk
@@ -262,6 +305,7 @@ player_action = () ->
 	enable_skills()
 	enable_attacks()
 
+###
 player_use_skill = (skill) ->
 	switch skill.type
 		when "單體攻擊"
@@ -279,9 +323,10 @@ player_use_skill = (skill) ->
 		when "攻擊回合延遲型"
 		when "傷害集中型"
 			return
+###
 
 player_attack = (prop, as_enable=true) ->
-	for card in cards
+	for card in cards[..-2]
 		card.attack(prop, as_enable)
 		
 
