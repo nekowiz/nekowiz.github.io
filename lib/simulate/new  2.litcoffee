@@ -363,6 +363,7 @@ load_enemy_info_to_input = () ->
 	for enemy in current_enemies
 		hp_index = "#enemy#{i}_hp"
 		$(hp_index).val(enemy.current_hp)
+		i += 1
 
 start = () ->
 	load_card_info_to_input()
