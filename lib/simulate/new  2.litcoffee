@@ -98,7 +98,7 @@ class Card
 				
 				attack_ratio = @attack_info.atk_ratio
 				# 檢查屬性特攻
-				if @attack.info.prop_atk.indexOf(enemy.prop) != -1
+				if @attack_info.prop_atk.indexOf(enemy.prop) != -1
 					attack_ratio *= @attack_info.prop_atk_ratio
 				
 				atk = Math.floor(@max_atk * attack_ratio * (100 + combo) / 100)
