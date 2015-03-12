@@ -195,6 +195,8 @@ class Card
 								card.current_hp = Math.floor(card.current_hp)
 								if card.current_hp > card.max_hp
 									card.current_hp = card.max_hp
+		else
+			@attack_info.atk_ratio = 0
 	target_reset: () ->
 		@target = -1
 	target_set: (target_index) ->
