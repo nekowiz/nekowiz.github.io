@@ -449,7 +449,7 @@ attack_penal = (prop) ->
 	# 檢查是否過關
 	if check_stage_clear(current_enemies)
 		current_stage += 1
-		if current_stage > stages.length
+		if current_stage >= stages.length
 			stage_all_clear()
 		else
 			play_stage(stages[current_stage])
