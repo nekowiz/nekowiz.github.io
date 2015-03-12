@@ -413,8 +413,10 @@ load_card_info_to_input = () ->
 	for i in [1..6]
 		hp_index = "#card#{i}_hp"
 		atk_index = "#card#{i}_atk"
+		id_index = "#card#{i}"
 		$(hp_index).val(cards[i-1].current_hp)
 		$(atk_index).val(cards[i-1].max_atk)
+		$(id_index).val(cards[i-1].id)
 
 load_enemy_info_to_input = () ->
 	i = 1
