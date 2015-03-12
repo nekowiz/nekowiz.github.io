@@ -73,6 +73,13 @@ var wizneko_events = [
 	start: "2015-03-05",
 	end: "2015-03-25",
 	backgroundColor: "green"
+},
+{
+	title: "神龍降臨",
+	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E7%A5%9E%E9%BE%8D%E9%99%8D%E8%87%A8",
+	start: "2015-03-12",
+	end: "2015-04-01",
+	backgroundColor: "DarkRed"
 }
 ];
 
