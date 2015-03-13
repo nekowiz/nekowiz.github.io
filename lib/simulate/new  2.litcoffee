@@ -468,7 +468,7 @@ load_enemy_info_to_input = () ->
 	i = 1
 	for enemy in current_enemies
 		hp_index = "#enemy#{i}_hp"
-		name_index = "enemy#{i}_name"
+		name_index = "#enemy#{i}_name"
 		$(hp_index).val(enemy.current_hp)
 		$(name_index).val(enemy.name)
 		i += 1
