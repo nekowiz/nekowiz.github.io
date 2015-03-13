@@ -188,7 +188,7 @@ class Card
 							@current_hp = @max_hp
 					when "回復（隊友）"
 						for card in cards[..-2]
-							if @as_data.elmts.indexOf(card.prop) != -1
+							if @as_data.elmts.indexOf(card.prop) != -1 && card.is_dead() == false
 								if @as_data.mode == "%數"
 									card.current_hp += card.max_hp * @as_data.ratio / 100
 								else if @as_data.mode == "絕對值"
