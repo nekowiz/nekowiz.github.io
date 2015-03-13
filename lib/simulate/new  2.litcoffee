@@ -481,6 +481,9 @@ load_enemy_info_to_input = () ->
 		i += 1
 
 start = () ->
+	# 重設 stages, monsters
+	stages = []
+	monsters = {}
 	load_card_info_to_input()
 	# 讀取關卡資料
 	stage_name = $("#quest").val()
