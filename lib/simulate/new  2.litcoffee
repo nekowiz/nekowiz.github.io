@@ -429,6 +429,8 @@ disable_attacks = () ->
 		$(index).attr("disabled", true);
 	
 player_action = () ->
+	# 更新玩家卡片資料
+	load_card_info_to_input()
 	# enable_skills()
 	enable_attacks()
 
@@ -564,8 +566,6 @@ attack_penal = (prop) ->
 					cards[5] = cards[index]
 					cards[index] = tmp
 					break
-		# 更新玩家卡片資料
-		load_card_info_to_input()
 		# 檢查是否全滅
 		if check_stage_fail()
 			msg_log("全部卡片都死亡，過關失敗")
