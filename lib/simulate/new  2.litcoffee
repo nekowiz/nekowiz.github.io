@@ -473,6 +473,12 @@ load_enemy_info_to_input = () ->
 		$(hp_index).val(enemy.current_hp)
 		$(name_index).val(enemy.name)
 		i += 1
+	while i <= 3
+		hp_index = "#enemy#{i}_hp"
+		name_index = "#enemy#{i}_name"
+		$(hp_index).val("")
+		$(name_index).val("")
+		i += 1
 
 start = () ->
 	load_card_info_to_input()
