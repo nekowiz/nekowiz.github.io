@@ -83,46 +83,47 @@ class Card
 				@load_done = true
 				check_all_cards_loaded()
 	attack: (enemies) ->
-		for i in [1..@attack_info.atk_times]
-			# 打單體
-			if @attack_info.target_num == 1
-				target_enemy = enemies[0]
-				if @target != -1
-					if enemies[@target].is_dead()
-						@target = -1
-				if @target == -1
+		if @current_hp != 0
+			for i in [1..@attack_info.atk_times]
+				# 打單體
+				if @attack_info.target_num == 1
+					target_enemy = enemies[0]
+					if @target != -1
+						if enemies[@target].is_dead()
+							@target = -1
+					if @target == -1
+						for enemy in enemies
+							if not enemy.is_dead()
+								target_enemy = enemy
+								break
+					else
+						target_enemy = enemies[@target]
+					
+					attack_ratio = @attack_info.atk_ratio
+					# 檢查屬性特攻
+					if @attack_info.prop_atk.indexOf(enemy.prop) != -1
+						attack_ratio *= @attack_info.prop_atk_ratio
+					
+					atk = Math.floor(@max_atk * attack_ratio * (100 + combo) / 100)
+					atk_value = enemy.damage(atk, @prop)
+					# 吸血
+					@current_hp += atk_value * @attack_info.life_drain
+					if @current_hp >= @max_hp
+						@current_hp = @max_hp
+					@current_hp = Math.floor(@current_hp)
+								
+				# 打全體
+				else
+					atk = @max_atk * @attack_info.atk_ratio * (100 + combo) / 100
+					enemies_alive_count = 0
 					for enemy in enemies
 						if not enemy.is_dead()
-							target_enemy = enemy
-							break
-				else
-					target_enemy = enemies[@target]
-				
-				attack_ratio = @attack_info.atk_ratio
-				# 檢查屬性特攻
-				if @attack_info.prop_atk.indexOf(enemy.prop) != -1
-					attack_ratio *= @attack_info.prop_atk_ratio
-				
-				atk = Math.floor(@max_atk * attack_ratio * (100 + combo) / 100)
-				atk_value = enemy.damage(atk, @prop)
-				# 吸血
-				@current_hp += atk_value * @attack_info.life_drain
-				if @current_hp >= @max_hp
-					@current_hp = @max_hp
-				@current_hp = Math.floor(@current_hp)
-							
-			# 打全體
-			else
-				atk = @max_atk * @attack_info.atk_ratio * (100 + combo) / 100
-				enemies_alive_count = 0
-				for enemy in enemies
-					if not enemy.is_dead()
-						enemies_alive_count += 1
-				if @attack_info.target_all_average != 0
-					atk /= enemies_alive_count
-				atk = Math.floor(atk)
-				for enemy in enemies
-					enemy.damage(atk, @prop)
+							enemies_alive_count += 1
+					if @attack_info.target_all_average != 0
+						atk /= enemies_alive_count
+					atk = Math.floor(atk)
+					for enemy in enemies
+						enemy.damage(atk, @prop)
 		
 	attack_info_set: (prop, as_enable) ->
 		if prop.indexOf(@prop) != -1
