@@ -266,6 +266,7 @@ monsters = {
 	}
 }
 
+###
 stages = [
 	[
 		[997, 8000, 1, 1, 400, [0]],
@@ -278,6 +279,36 @@ stages = [
 		[995, 6000, 2, 1, 675, [0]]
 	]
 ]
+###
+
+stages = []
+
+quests = {
+	"封魔級　釋放雷光的禁書": {
+		"type": 0
+		"stage_number": 5
+		"stages": [
+			[
+				[105, 7904, 1, 5, 438, [0]]
+			]
+			[
+				[105, 7904, 1, 5, 438, [0]]
+				[105, 7904, 1, 5, 438, [0]]
+				[104, 3796, 1, 5, 263, [0]]
+			]
+			[
+				[104, 3796, 1, 5, 263, [0]]
+				[105, 7904, 1, 5, 438, [0]]
+				[104, 3796, 1, 5, 263, [0]]
+			]
+		]
+		"boss": [
+			[105, 7904, 1, 5, 438, [0]]
+			[105, 7904, 1, 5, 438, [0]]
+			[105, 7904, 1, 5, 438, [0]]
+		]
+	}
+}
 
 randomTurn = (turn) ->
 	max = turn + 1
@@ -433,6 +464,17 @@ load_enemy_info_to_input = () ->
 
 start = () ->
 	load_card_info_to_input()
+	# 讀取關卡資料
+	stage_name = $("#quest").val()
+	if quests[stage_name].type == 0
+		# 隨機道中，產生 stage
+		stage_infos = quests[stage_name]
+		for i in [1..stage_infos.stage_number-1]
+			stages[i-1] = stage_infos.stages[randomNum(stage_infos.stages.length-1, 0)]
+		stages[stage_infos.stage_number-1] = stage_infos.boss
+	else
+		# 固定路線
+		stages = quests[stage_name].stages
 	current_stage = 0
 	play_stage(stages[current_stage])
 	
