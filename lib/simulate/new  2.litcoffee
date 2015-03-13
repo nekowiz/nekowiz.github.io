@@ -243,6 +243,7 @@ props = {
 	}
 }
 		
+###
 monsters = {
 	997: {
 		name: "黃金色武士亡靈"
@@ -266,7 +267,6 @@ monsters = {
 	}
 }
 
-###
 stages = [
 	[
 		[997, 8000, 1, 1, 400, [0]],
@@ -281,6 +281,7 @@ stages = [
 ]
 ###
 
+monsters = {}
 stages = []
 
 quests = {
@@ -307,6 +308,16 @@ quests = {
 			[105, 7904, 1, 5, 438, [0]]
 			[105, 7904, 1, 5, 438, [0]]
 		]
+		"monsters": {
+			104: {
+				name: "閃電之魔導書"
+				prop: "雷"
+			}
+			105: {
+				name: "閃耀雷電之亞力克‧格林"
+				prop: "雷"
+			}
+		}
 	}
 }
 
@@ -466,15 +477,16 @@ start = () ->
 	load_card_info_to_input()
 	# 讀取關卡資料
 	stage_name = $("#quest").val()
+	stage_infos = quests[stage_name]
 	if quests[stage_name].type == 0
 		# 隨機道中，產生 stage
-		stage_infos = quests[stage_name]
 		for i in [1..stage_infos.stage_number-1]
 			stages[i-1] = stage_infos.stages[randomNum(stage_infos.stages.length-1, 0)]
 		stages[stage_infos.stage_number-1] = stage_infos.boss
 	else
 		# 固定路線
-		stages = quests[stage_name].stages
+		stages = stage_infos.stages
+	monsters = stage_infos.monsters
 	current_stage = 0
 	play_stage(stages[current_stage])
 	
