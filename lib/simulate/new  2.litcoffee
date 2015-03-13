@@ -1,6 +1,12 @@
 randomNum = (max,min=0) ->
 	return Math.floor(Math.random() * (max+1 - min) + min)
 
+enable_log = true
+
+msg_log = (msg) ->
+	original_text = $("#msg").text()
+	$("#msg").text(msg + "\n" + original_text)
+	
 cards = []
 combo = 0
 panel_color = 1
@@ -106,6 +112,7 @@ class Card
 					
 					atk = Math.floor(@max_atk * attack_ratio * (100 + combo) / 100)
 					atk_value = enemy.damage(atk, @prop)
+					msg_log(@name + " ratio: " + attack_ratio + ", combo: " + combo + ", atk: " + atk + ", damage: " + atk_value + ", target: " + enemy.name)
 					# 吸血
 					@current_hp += atk_value * @attack_info.life_drain
 					if @current_hp >= @max_hp
@@ -122,12 +129,14 @@ class Card
 					if @attack_info.target_all_average != 0
 						atk /= enemies_alive_count
 					atk = Math.floor(atk)
+					msg_log(@name + " ratio: " + @attack_info.atk_ratio + ", combo: " + combo + ", atk: " + atk + ", target: 全體")
 					for enemy in enemies
 						enemy.damage(atk, @prop)
 		
 	attack_info_set: (prop, as_enable) ->
 		if prop.indexOf(@prop) != -1
 			if as_enable
+				msg_log(@name + " 卡片發動 AS: " + @as_data.type)
 				switch @as_data.type
 					when "攻擊上升"
 						@attack_info.atk_ratio *= (@as_data.ratio/100)
@@ -216,6 +225,8 @@ class Card
 			atk_value = @current_hp
 		atk_value = Math.floor(atk_value)
 		@current_hp -= atk_value
+		if not @is_dead()
+			msg_log("卡片 " + @name + " 受到攻擊 HP: " + (@current_hp+atk_value) + " -> " + @current_hp)
 		return atk_value
 	is_dead: () ->
 		return @current_hp == 0
@@ -351,6 +362,8 @@ class Enemy
 			atk_value = @current_hp
 		atk_value = Math.floor(atk_value)
 		@current_hp -= atk_value
+		if not @is_dead
+			msg_log("敵人 " + @name + " 受到攻擊 HP: " + (@current_hp+atk_value) + " -> " + @current_hp)
 		return atk_value
 	one_turn_pass: () ->
 		if not @is_dead()
@@ -372,6 +385,7 @@ class Enemy
 				if attack_count == @target
 					break
 				if not cards[i].is_dead()
+					msg_log("敵人 " + @name + " 攻擊" + cards[i].name + " atk: " + @atk)
 					cards[i].damage(@atk, @prop)
 					attack_count += 1
 		if @current_turn == 0
@@ -443,6 +457,7 @@ player_attack = (prop, as_enable=true) ->
 play_stage = (stage) ->
 	current_enemies = inital_enemy_data stage
 	load_enemy_info_to_input()
+	msg_log("第 " + (current_stage+1).toString() + " 關敵人讀取完畢")
 	# 重設 target
 	for card in cards
 		card.target_reset()
@@ -470,14 +485,18 @@ load_enemy_info_to_input = () ->
 	for enemy in current_enemies
 		hp_index = "#enemy#{i}_hp"
 		name_index = "#enemy#{i}_name"
+		turn_index = "#enemy#{i}_turn"
 		$(hp_index).val(enemy.current_hp)
 		$(name_index).val(enemy.name)
+		$(turn_index).val(enemy.current_turn)
 		i += 1
 	while i <= 3
 		hp_index = "#enemy#{i}_hp"
 		name_index = "#enemy#{i}_name"
+		turn_index = "#enemy#{i}_turn"
 		$(hp_index).val("")
 		$(name_index).val("")
+		$(turn_index).val("")
 		i += 1
 
 start = () ->
@@ -485,6 +504,7 @@ start = () ->
 	stages = []
 	monsters = {}
 	load_card_info_to_input()
+	msg_log("卡片讀取完畢，讀取關卡資料...")
 	# 讀取關卡資料
 	stage_name = $("#quest").val()
 	stage_infos = quests[stage_name]
@@ -497,15 +517,19 @@ start = () ->
 		# 固定路線
 		stages = stage_infos.stages
 	monsters = stage_infos.monsters
+	msg_log("關卡資料讀取完畢，進入遊戲")
 	current_stage = 0
 	play_stage(stages[current_stage])
 	
 stage_all_clear = () ->
-	console.log("All stage cleared!!")
+	msg_log("全部關卡皆已過關!!")
+	# console.log("All stage cleared!!")
 	
 attack_penal = (prop) ->
+	combo += 1
 	disable_attacks()
 	as_enable = $("#as_enable").is(":checked")
+	msg_log("攻擊屬性: " + prop + ", AS: " + as_enable)
 	for card in cards[..-2]
 		card.attack_info_reset()
 	for card in cards[..-2]
@@ -518,6 +542,7 @@ attack_penal = (prop) ->
 	load_enemy_info_to_input()
 	# 檢查是否過關
 	if check_stage_clear(current_enemies)
+		msg_log("關卡 " + (current_stage+1) + " 過關")
 		current_stage += 1
 		if current_stage >= stages.length
 			stage_all_clear()
@@ -525,11 +550,13 @@ attack_penal = (prop) ->
 			play_stage(stages[current_stage])
 	else
 		# 換怪物攻擊
+		msg_log("攻擊結束，敵人的回合")
 		enemies_one_turn_pass()
 		# 檢查是否有援助進來
 		if not cards[5].is_dead()
 			for card,index in cards[..-2]
 				if card.is_dead()
+					msg_log("卡片死亡，援助進入")
 					tmp = cards[5]
 					cards[5] = cards[index]
 					cards[index] = tmp
@@ -538,9 +565,11 @@ attack_penal = (prop) ->
 		load_card_info_to_input()
 		# 檢查是否全滅
 		if check_stage_fail()
+			msg_log("全部卡片都死亡，過關失敗")
 			console.log("Stage failed!!")
 		else
 			# 換玩家行動
+			msg_log("攻擊結束，玩家的回合")
 			player_action()
 			
 	
