@@ -144,7 +144,7 @@ class Card
 						@attack_info.atk_ratio *= @as_data.ratio
 						@attack_info.target_num = 5
 						@attack_info.target_all_average = 0
-					when "隨機攻擊"
+					when "賭博攻擊"
 						@attack_info.atk_ratio *= (randomNum(@as_data.ratio, 100)/100)
 					when "吸收"
 						@attack_info.life_drain = @as_data.ratio / 100
@@ -170,14 +170,14 @@ class Card
 					when "問答屬性數攻擊上升"
 						index = "ratio#{panel_color}"
 						@attack_info.atk_ratio *= @as_data[index]
-					when "隊伍屬性數攻擊上升"
+					when "屬性的庇佑"
 						elmts_count = {"火":0, "水":0, "雷":0}
 						for card in cards[..-2]
 							elmts_count[card.prop] = 1
 						elmts_num = elmts_count["火"] + elmts_count["水"] + elmts_count["雷"]
 						index = "ratio#{elmts_num}"
 						@attack_info.atk_ratio *= @as_data[index]
-					when "自身回復"
+					when "回復（自身）"
 						if @as_data.mode == "%數"
 							@current_hp += @max_hp * @as_data.ratio / 100
 						else if @as_data.mode == "絕對值"
@@ -185,7 +185,7 @@ class Card
 						@current_hp = Math.floor(@current_hp)
 						if @current_hp > @max_hp
 							@current_hp = @max_hp
-					when "屬性回復"
+					when "回復（隊友）"
 						for card in cards[..-2]
 							if @as_data.elmts.indexOf(card.prop) != -1
 								if @as_data.mode == "%數"
