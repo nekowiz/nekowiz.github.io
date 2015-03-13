@@ -388,16 +388,19 @@ class Enemy
 					msg_log("敵人 " + @name + " 攻擊" + cards[i].name + " atk: " + @atk)
 					cards[i].damage(@atk, @prop)
 					attack_count += 1
-		if @current_turn == 0
-			@current_turn = @turn
 			
 enemies_one_turn_pass = () ->
 	for enemy in current_enemies
 		enemy.one_turn_pass()
 	for enemy in current_enemies
-		enemy.use_skill()
+		if enemy.current_turn == 0
+			enemy.use_skill()
 	for enemy in current_enemies
-		enemy.attack()
+		if enemy.current_turn == 0
+			enemy.attack()
+	for enemy in current_enemies
+		if enemy.current_turn == 0
+			enemy.current_turn = enemy.turn
 	
 
 inital_enemy_data = (stage) ->
