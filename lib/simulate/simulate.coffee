@@ -89,7 +89,7 @@ class Card
                 @attack_info = {}
                 @load_done = true
                 check_all_cards_loaded()
-    get_target_enemy: () ->
+    get_target_enemy: (enemies) ->
         target_enemy = enemies[0]
         if @target != -1
             if enemies[@target].is_dead()
@@ -111,7 +111,7 @@ class Card
             for i in [1..@attack_info.atk_times]
                 # 打單體
                 if @attack_info.target_num == 1
-                    target_enemy = @get_target_enemy()
+                    target_enemy = @get_target_enemy(enemies)
                     attack_ratio = @attack_info.atk_ratio
                     # 檢查屬性特攻
                     if @attack_info.prop_atk.indexOf(enemy.prop) != -1
@@ -245,7 +245,7 @@ class Card
         if @current_cd == 0
             switch @ss_data.type
                 when "單體攻擊"
-                    target_enemy = @get_target_enemy()
+                    target_enemy = @get_target_enemy(current_enemies)
                     atk = @max_atk * @get_combo_ratio()
                     target_enemy.damage(atk, @prop)
                 when "全體攻擊"
@@ -253,7 +253,7 @@ class Card
                     for enemy in enemies
                         enemy.damage(atk, @prop)
                 when "單體百分比攻擊"
-                    target_enemy = @get_target_enemy()
+                    target_enemy = @get_target_enemy(current_enemies)
                     target_enemy.damage_percent(@ss_data.ratio/100)
                 when "全體百分比攻擊"
                     for enemy in enemies
