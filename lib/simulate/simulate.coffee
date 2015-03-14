@@ -239,6 +239,9 @@ class Card
         @current_hp -= Math.floor(@current_hp * ratio)
     is_dead: () ->
         return @current_hp == 0
+    one_turn_pass: () ->
+        if not @is_dead() && @current_cd > 0
+            @current_cd -= 1
     ss_ready: () ->
         return @current_cd == 0
     use_ss: () ->
@@ -557,10 +560,12 @@ load_card_info_to_input = () ->
         atk_index = "#card#{i}_atk"
         id_index = "#card#{i}"
         name_index = "#card#{i}_name"
+        cd_index = "#card#{i}_cd"
         $(hp_index).val(cards[i-1].current_hp)
         $(atk_index).val(cards[i-1].max_atk)
         $(id_index).val(cards[i-1].id)
         $(name_index).val(cards[i-1].name)
+        $(cd_index).val(cards[i-1].current_cd)
 
 load_enemy_info_to_input = () ->
     i = 1
@@ -620,6 +625,8 @@ attack_penal = (prop) ->
         card.attack(current_enemies)
         if check_stage_clear(current_enemies)
             break
+    for card in cards[..-2]
+        card.one_turn_pass()
     # 更新怪物 hp
     load_enemy_info_to_input()
     # 檢查是否過關
