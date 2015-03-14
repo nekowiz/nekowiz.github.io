@@ -33,9 +33,16 @@ class Card
                     if index != ""
                         _this[index] = value
                 store_data $.trim(line) for line in data.split("|")[1..-2]
-                @current_hp = @max_hp
-                @ss_cd = ((@ss_cd == "") ? 0 : parseInt(@ss_cd, 10))
+                if @ss_cd == ""
+                    @ss_cd = 0
+                else
+                    @ss_cd = parseInt(@ss_cd, 10)
                 @current_cd = @ss_cd
+                @max_hp = parseInt(@max_hp, 10)
+                @max_atk = parseInt(@max_atk, 10)
+                @cost = parseInt(@cost, 10)
+                @current_hp = @max_hp
+                @max_level = parseInt(@max_level, 10)
                 
                 @as_data = {}
                 @ss_data = {}
