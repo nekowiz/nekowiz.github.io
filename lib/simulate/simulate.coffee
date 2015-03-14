@@ -114,12 +114,12 @@ class Card
                     target_enemy = @get_target_enemy(enemies)
                     attack_ratio = @attack_info.atk_ratio
                     # 檢查屬性特攻
-                    if @attack_info.prop_atk.indexOf(enemy.prop) != -1
+                    if @attack_info.prop_atk.indexOf(target_enemy.prop) != -1
                         attack_ratio *= @attack_info.prop_atk_ratio
                     
                     atk = Math.floor(@max_atk * attack_ratio * @get_combo_ratio())
                     atk_value = target_enemy.damage(atk, @prop)
-                    msg_log(@name + " ratio: " + attack_ratio + ", combo: " + combo + ", atk: " + atk + ", damage: " + atk_value + ", target: " + enemy.name)
+                    msg_log(@name + " ratio: " + attack_ratio + ", combo: " + combo + ", atk: " + atk + ", damage: " + atk_value + ", target: " + target_enemy.name)
                     # 吸血
                     @current_hp += atk_value * @attack_info.life_drain
                     if @current_hp >= @max_hp
