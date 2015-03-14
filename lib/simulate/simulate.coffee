@@ -34,7 +34,8 @@ class Card
 						_this[index] = value
 				store_data $.trim(line) for line in data.split("|")[1..-2]
 				@current_hp = @max_hp
-				@current_cd = (@ss_cd == "") ? "0" : @ss_cd
+				@ss_cd = (@ss_cd == "") ? 0 : parseInt(@ss_cd, 10)
+				@current_cd = @ss_cd
 				
 				@as_data = {}
 				@ss_data = {}
@@ -88,40 +89,46 @@ class Card
 				@attack_info = {}
 				@load_done = true
 				check_all_cards_loaded()
+	get_target_enemy: () ->
+	    target_enemy = enemies[0]
+	    if @target != -1
+	        if enemies[@target].is_dead()
+	            @target = -1
+	    if @target == -1
+	        for enemy in enemies
+	            if not enemy.is_dead()
+	                target_enemy = enemy
+	                break
+        else
+            target_enemy = enemies[@target]
+        return target_enemy
+        
+    get_combo_ratio: () ->
+        return (100 + combo) / 100
+    
 	attack: (enemies) ->
 		if @current_hp != 0
 			for i in [1..@attack_info.atk_times]
 				# 打單體
 				if @attack_info.target_num == 1
-					target_enemy = enemies[0]
-					if @target != -1
-						if enemies[@target].is_dead()
-							@target = -1
-					if @target == -1
-						for enemy in enemies
-							if not enemy.is_dead()
-								target_enemy = enemy
-								break
-					else
-						target_enemy = enemies[@target]
-					
+					target_enemy = @get_target_enemy()
 					attack_ratio = @attack_info.atk_ratio
 					# 檢查屬性特攻
 					if @attack_info.prop_atk.indexOf(enemy.prop) != -1
 						attack_ratio *= @attack_info.prop_atk_ratio
 					
-					atk = Math.floor(@max_atk * attack_ratio * (100 + combo) / 100)
-					atk_value = enemy.damage(atk, @prop)
+					atk = Math.floor(@max_atk * attack_ratio * @get_combo_ratio())
+					atk_value = target_enemy.damage(atk, @prop)
 					msg_log(@name + " ratio: " + attack_ratio + ", combo: " + combo + ", atk: " + atk + ", damage: " + atk_value + ", target: " + enemy.name)
 					# 吸血
 					@current_hp += atk_value * @attack_info.life_drain
 					if @current_hp >= @max_hp
 						@current_hp = @max_hp
 					@current_hp = Math.floor(@current_hp)
-								
+					
 				# 打全體
 				else
-					atk = @max_atk * @attack_info.atk_ratio * (100 + combo) / 100
+					atk = @max_atk * @attack_info.atk_ratio * @get_combo_ratio()
 					enemies_alive_count = 0
 					for enemy in enemies
 						if not enemy.is_dead()
@@ -228,8 +235,68 @@ class Card
 		if not @is_dead()
 			msg_log("卡片 " + @name + " 受到攻擊 HP: " + (@current_hp+atk_value) + " -> " + @current_hp)
 		return atk_value
+	damage_percent: (ratio) ->
+        @current_hp -= Math.floor(@current_hp * ratio)
 	is_dead: () ->
 		return @current_hp == 0
+	ss_ready: () ->
+		return @current_cd == 0
+	use_ss: () ->
+	    if @current_cd == 0
+	        switch @ss_data.type
+	            when "單體攻擊"
+	                target_enemy = @get_target_enemy()
+	                atk = @max_atk * @get_combo_ratio()
+	                target_enemy.damage(atk, @prop)
+	            when "全體攻擊"
+	                atk = @max_atk * @get_combo_ratio()
+	                for enemy in enemies
+	                    enemy.damage(atk, @prop)
+	            when "單體百分比攻擊"
+	                target_enemy = @get_target_enemy()
+	                target_enemy.damage_percent(@ss_data.ratio/100)
+	            when "全體百分比攻擊"
+	                for enemy in enemies
+	                    enemy.damage_percent(@ss_data.ratio/100)
+	            when "單體HP消耗攻擊"     # TODO
+	                break
+	            when "毒傷攻擊"           # TODO
+	                break
+	            when "屬性指定回復"
+	                for card in cards[..-2]
+	                    if @ss_data.elmts.indexOf(card.prop) != -1
+	                        card.current_hp += card.max_hp * @ss_data.ratio / 100
+	                        if card.current_hp > card.max_hp
+	                            card.current_hp = card.max_hp
+                when "全體回復"
+                    for card in cards[..-2]
+                        if @ss_data.mode == "%數"
+                            card.current_hp += card.max_hp * @ss_data.ratio / 100
+                        else if @ss_data.mode == "絕對值"
+                            card.current_hp += @ss_data.ratio
+                        
+                        if card.current_hp > card.max_hp
+                            card.current_hp = card.max_hp
+                when "復活"
+                    for card in cards[..-2]
+                        if @ss_data.elmts.indexOf(card.prop) != -1 && card.is_dead()
+                            card.current_hp = card.max_hp * @ss_data.ratio / 100
+                when "獻身"
+                    for card in cards[..-2]
+                        if card.is_dead()
+                            card.current_hp = card.max_hp * @ss_data.ratio / 100
+                    @current_hp = 0
+                when "攻擊力增加型"       # TODO
+                    break
+                when "傷害減輕型"        # TODO
+                    break
+                when "攻擊回合延遲型"
+                    for enemy in enemies
+                        enemy.current_turn += @ss_data.neff
+                when "傷害集中型"        # TODO
+                    break
+                            
+	        @current_cd = @ss_cd
 				
 
 load_cards = () ->
@@ -365,6 +432,8 @@ class Enemy
 		if not @is_dead
 			msg_log("敵人 " + @name + " 受到攻擊 HP: " + (@current_hp+atk_value) + " -> " + @current_hp)
 		return atk_value
+    damage_percent: (ratio) ->
+        @current_hp -= Math.floor(@current_hp * ratio)
 	one_turn_pass: () ->
 		if not @is_dead()
 			@current_turn -= 1
@@ -418,6 +487,15 @@ check_stage_fail = () ->
 			return false
 	return true
 
+enable_skills = () ->
+	for i in [1..6] 
+		index = "#skill_#{i}"
+		$(index).text(cards[i-1].ss)
+		if cards[i-1].ss_ready()
+			$(index).attr("disabled", false)
+		else
+			$(index).attr("disabled", true)
+	
 enable_attacks = () ->
 	for i in [1..7]
 		index = "#attack_#{i}"
@@ -431,28 +509,27 @@ disable_attacks = () ->
 player_action = () ->
 	# 更新玩家卡片資料
 	load_card_info_to_input()
-	# enable_skills()
+	enable_skills()
 	enable_attacks()
 
-###
-player_use_skill = (skill) ->
-	switch skill.type
-		when "單體攻擊"
-		when "全體攻擊"
-		when "單體百分比攻擊"
-		when "全體百分比攻擊"
-		when "單體HP消耗攻擊"
-		when "毒傷攻擊"
-		when "屬性指定回復"
-		when "全體回復"
-		when "復活"
-		when "獻身"
-		when "攻擊力增加型"
-		when "傷害減輕型"
-		when "攻擊回合延遲型"
-		when "傷害集中型"
-			return
-###
+use_ss = (card_index) ->
+    card_index -= 1
+    card = cards[card_index]
+    card.use_ss()
+    
+    # 更新怪物 hp
+	load_enemy_info_to_input()
+	# 檢查是否過關
+	if check_stage_clear(current_enemies)
+		msg_log("關卡 " + (current_stage+1) + " 過關")
+		current_stage += 1
+		if current_stage >= stages.length
+			stage_all_clear()
+		else
+			play_stage(stages[current_stage])
+			
+	# 重新計算 SS CD
+	enable_skills()
 
 player_attack = (prop, as_enable=true) ->
 	for card in cards[..-2]
@@ -584,3 +661,9 @@ $ ->
 		index = "#attack_#{i}"
 		$(index).on "click", ->
 			attack_penal($(this).text())
+	for i in [1..6]
+		index = "#skill_#{i}"
+		$(index).on "click", ((current_i) ->
+			return () ->
+			    use_ss(current_i)
+			)(i)
