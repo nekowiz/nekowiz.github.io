@@ -260,13 +260,13 @@ class Card
                     target_enemy.damage(atk, @prop)
                 when "全體攻擊"
                     atk = @max_atk * @get_combo_ratio()
-                    for enemy in enemies
+                    for enemy in current_enemies
                         enemy.damage(atk, @prop)
                 when "單體百分比攻擊"
                     target_enemy = @get_target_enemy(current_enemies)
                     target_enemy.damage_percent(@ss_data.ratio/100)
                 when "全體百分比攻擊"
-                    for enemy in enemies
+                    for enemy in current_enemies
                         enemy.damage_percent(@ss_data.ratio/100)
                 when "單體HP消耗攻擊"     # TODO
                     break
@@ -301,7 +301,7 @@ class Card
                 when "傷害減輕型"        # TODO
                     break
                 when "攻擊回合延遲型"
-                    for enemy in enemies
+                    for enemy in current_enemies
                         enemy.current_turn += @ss_data.neff
                 when "傷害集中型"        # TODO
                     break
