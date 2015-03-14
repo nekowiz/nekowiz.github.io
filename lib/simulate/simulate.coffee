@@ -34,7 +34,7 @@ class Card
                         _this[index] = value
                 store_data $.trim(line) for line in data.split("|")[1..-2]
                 @current_hp = @max_hp
-                @ss_cd = (@ss_cd == "") ? 0 : parseInt(@ss_cd, 10)
+                @ss_cd = ((@ss_cd == "") ? 0 : parseInt(@ss_cd, 10))
                 @current_cd = @ss_cd
                 
                 @as_data = {}
