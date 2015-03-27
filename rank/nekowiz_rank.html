@@ -1,9 +1,10 @@
 <html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="http://code.highcharts.com/highcharts.js"></script>
-<script src="http://code.highcharts.com/modules/exporting.js"></script>
+<script src="http://code.highcharts.com/stock/highstock.js"></script>
+<script src="http://code.highcharts.com/stock/modules/exporting.js"></script>
 <script src="./output.js"></script>
 
 <script type="text/javascript">
@@ -15,8 +16,41 @@ $(function () {
     });
     $('#container').highcharts({
         chart: {
-            type: 'line'
+            type: 'line',
+			zoomType: 'y',
+			animation: false
         },
+		rangeSelector: {
+			enabled: true,
+			buttons: [{
+				type: 'minute',
+				count: 30,
+				text: '30分'
+			}, {
+				type: 'hour',
+				count: 1,
+				text: '1小時'
+			}, {
+				type: 'hour',
+				count: 2,
+				text: '2小時'
+			}, {
+				type: 'hour',
+				count: 3,
+				text: '3小時'
+			}, {
+				type: 'hour',
+				count: 6,
+				text: '6小時'
+			}, {
+				type: 'all',
+				text: '全部'
+			},
+			]
+		},
+		scrollbar: {
+			enabled: true
+		},
         title: {
             text: '黑貓問答RPG 魔道盃排名表'
         },
@@ -39,16 +73,44 @@ $(function () {
             }
         },
         tooltip: {
-            headerFormat: '<b>{series.name}</b><br>',
-            pointFormat: '{point.x:%H:%M:%S}<br>{point.y} Pt<br>{point.pvnRankName}<br>得名成績: {point.PvnRecord.1}/{point.PvnRecord.2}/{point.PvnRecord.3}<br>'
+			shared: false,
+            headerFormat: '{point.x:%H:%M:%S}<br>',
+            pointFormat: '<b>{series.name}</b><br>{point.y} Pt<br>{point.pvnRankName}<br>得名成績: {point.PvnRecord.1}/{point.PvnRecord.2}/{point.PvnRecord.3}<br>'
         },
 
         plotOptions: {
-            spline: {
+            line: {
                 marker: {
                     enabled: true
                 }
-            }
+            },
+			series: {
+				lineWidth: 1,
+				states: {
+                    hover: {
+                        enabled: true,
+                        lineWidth: 3
+                    }
+                },
+				events: {
+					click: function(event) {
+						
+						var seriesIndex = this.index;
+						var series = this.chart.series;
+						for (var i = 0; i < series.length; i++)
+						{
+							if (series[i].index != seriesIndex)
+							{
+								series[i].visible ?
+								series[i].hide() :
+								series[i].show();
+							} 
+						}
+						
+						return false;
+					}
+				}
+			}
         },
 
         series: series
@@ -58,6 +120,6 @@ $(function () {
 </head>
 
 <body>
-<div id="container" style="min-width: 310px; height: 1000px; margin: 0 auto"></div>
+<div id="container" style="min-width: 310px; height: 900px; margin: 0 auto"></div>
 </body>
 </html>
