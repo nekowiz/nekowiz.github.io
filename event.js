@@ -80,8 +80,44 @@ var wizneko_events = [
 	start: "2015-03-12",
 	end: "2015-04-01",
 	backgroundColor: "DarkRed"
+},
+{
+	title: "歌頌永恆的克羅諾斯",
+	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E6%AD%8C%E9%A0%8C%E6%B0%B8%E6%81%86%E7%9A%84%E5%85%8B%E7%BE%85%E8%AB%BE%E6%96%AF",
+	start: "2015-03-25",
+	end: "2015-04-15",
+	backgroundColor: "green"
+},
+{
+	title: "Dragon's Blader",
+	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/Dragon%27s_Blader",
+	start: "2015-04-01",
+	end: "2015-04-07",
+	backgroundColor: "DarkBlue"
+},
+{
+	title: "庫洛姆‧麥格納Ⅰ魔導學園",
+	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E5%BA%AB%E6%B4%9B%E5%A7%86%E2%80%A7%E9%BA%A5%E6%A0%BC%E7%B4%8D%E2%85%A0%E9%AD%94%E5%B0%8E%E5%AD%B8%E5%9C%92",
+	start: "2015-04-01",
+	end: "2015-04-22",
+	backgroundColor: "DarkRed"
+},
+{
+	title: "庫洛姆‧麥格納Ⅱ學園祭",
+	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E5%BA%AB%E6%B4%9B%E5%A7%86%E2%80%A7%E9%BA%A5%E6%A0%BC%E7%B4%8D%E2%85%A1%E5%AD%B8%E5%9C%92%E7%A5%AD",
+	start: "2015-04-01",
+	end: "2015-04-22",
+	backgroundColor: "Gray"
+},
+{
+	title: "TVCF開播慶祝活動",
+	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/TVCF%E9%96%8B%E6%92%AD%E6%85%B6%E7%A5%9D%E6%B4%BB%E5%8B%95",
+	start: "2015-04-01",
+	end: "2015-04-07",
+	backgroundColor: "DarkGreen"
 }
 ];
+// green, DarkBlue, DarkRed, gray, DarkGreen 
 
 // 日曜
 wizneko_events = wizneko_events.concat(gen_repeat_event_array(
