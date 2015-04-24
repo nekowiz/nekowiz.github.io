@@ -115,6 +115,20 @@ var wizneko_events = [
 	start: "2015-04-01",
 	end: "2015-04-07",
 	backgroundColor: "DarkGreen"
+},
+{
+	title: "巧克力森林",
+	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E5%B7%A7%E5%85%8B%E5%8A%9B%E6%A3%AE%E6%9E%97",
+	start: "2015-04-15",
+	end: "2015-05-06",
+	backgroundColor: "DarkBlue"
+},
+{
+	title: "妖精花園",
+	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E5%A6%96%E7%B2%BE%E8%8A%B1%E5%9C%92",
+	start: "2015-04-21",
+	end: "2015-05-12",
+	backgroundColor: "DarkRed"
 }
 ];
 // green, DarkBlue, DarkRed, gray, DarkGreen 
