@@ -128,7 +128,7 @@ var wizneko_events = [
 	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E5%A6%96%E7%B2%BE%E8%8A%B1%E5%9C%92",
 	start: "2015-04-21",
 	end: "2015-05-12",
-	backgroundColor: "DarkRed"
+	backgroundColor: "DarkGreen"
 }
 ];
 // green, DarkBlue, DarkRed, gray, DarkGreen 
