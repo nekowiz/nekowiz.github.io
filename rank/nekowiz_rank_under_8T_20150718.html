@@ -122,7 +122,7 @@ $(function () {
         tooltip: {
 			shared: false,
             headerFormat: '{point.x:%H:%M:%S}<br>',
-            pointFormat: '<b>{series.name}</b><br>{point.y} Pt<br>{point.pvnRankName}<br>得名成績: {point.PvnRecord.1}/{point.PvnRecord.2}/{point.PvnRecord.3}<br>'
+            pointFormat: '<b>{series.name}</b><br>{point.y} (+{point.yDiff}) Pt<br>{point.pvnRankName}<br>得名成績: {point.PvnRecord.1}(+{point.PvnRecord.1Diff})/{point.PvnRecord.2}(+{point.PvnRecord.2Diff})/{point.PvnRecord.3}(+{point.PvnRecord.3Diff})<br>正確率: {point.correctCount} (+{point.correctCountDiff}) / {point.quizCount} (+{point.quizCountDiff})<br>'
         },
 
         plotOptions: {
