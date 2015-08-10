@@ -371,6 +371,15 @@ wizneko_events = wizneko_events.concat(gen_repeat_event_array(
 7,
 "days"));
 wizneko_events = wizneko_events.concat(gen_repeat_event_array(
+"魔導書(火)",
+"http://zh.nekowiz.wikia.com/wiki/%E7%B7%8A%E6%80%A5%E4%BB%BB%E5%8B%99#.E8.B5.A4.E8.89.B2.E7.87.83.E7.87.92.E7.9A.84.E7.81.BC.E7.86.B1.E4.B9.8B.E6.9B.B8",
+"2015-01-19",
+"2015-12-31",
+"22:00",
+"24:00",
+7,
+"days"));
+wizneko_events = wizneko_events.concat(gen_repeat_event_array(
 "魔導書(水)",
 "http://zh.nekowiz.wikia.com/wiki/%E7%B7%8A%E6%80%A5%E4%BB%BB%E5%8B%99#.E9.9D.92.E8.89.B2.E7.A5.9E.E7.A5.95.E7.9A.84.E6.B7.B1.E6.B5.B7.E4.B9.8B.E6.9B.B8",
 "2015-01-20",
@@ -404,6 +413,15 @@ wizneko_events = wizneko_events.concat(gen_repeat_event_array(
 "2015-12-31",
 "19:00",
 "21:00",
+7,
+"days"));
+wizneko_events = wizneko_events.concat(gen_repeat_event_array(
+"魔導書(水)",
+"http://zh.nekowiz.wikia.com/wiki/%E7%B7%8A%E6%80%A5%E4%BB%BB%E5%8B%99#.E9.9D.92.E8.89.B2.E7.A5.9E.E7.A5.95.E7.9A.84.E6.B7.B1.E6.B5.B7.E4.B9.8B.E6.9B.B8",
+"2015-01-20",
+"2015-12-31",
+"22:00",
+"24:00",
 7,
 "days"));
 wizneko_events = wizneko_events.concat(gen_repeat_event_array(
@@ -443,6 +461,15 @@ wizneko_events = wizneko_events.concat(gen_repeat_event_array(
 7,
 "days"));
 wizneko_events = wizneko_events.concat(gen_repeat_event_array(
+"魔導書(雷)",
+"http://zh.nekowiz.wikia.com/wiki/%E7%B7%8A%E6%80%A5%E4%BB%BB%E5%8B%99#.E9.BB.83.E8.89.B2.E8.BC.9D.E7.85.8C.E7.9A.84.E5.85.89.E8.BC.9D.E4.B9.8B.E6.9B.B8",
+"2015-01-14",
+"2015-12-31",
+"22:00",
+"24:00",
+7,
+"days"));
+wizneko_events = wizneko_events.concat(gen_repeat_event_array(
 "魔導書(火)",
 "http://zh.nekowiz.wikia.com/wiki/%E7%B7%8A%E6%80%A5%E4%BB%BB%E5%8B%99#.E8.B5.A4.E8.89.B2.E7.87.83.E7.87.92.E7.9A.84.E7.81.BC.E7.86.B1.E4.B9.8B.E6.9B.B8",
 "2015-01-15",
@@ -476,6 +503,15 @@ wizneko_events = wizneko_events.concat(gen_repeat_event_array(
 "2015-12-31",
 "19:00",
 "21:00",
+7,
+"days"));
+wizneko_events = wizneko_events.concat(gen_repeat_event_array(
+"魔導書(火)",
+"http://zh.nekowiz.wikia.com/wiki/%E7%B7%8A%E6%80%A5%E4%BB%BB%E5%8B%99#.E8.B5.A4.E8.89.B2.E7.87.83.E7.87.92.E7.9A.84.E7.81.BC.E7.86.B1.E4.B9.8B.E6.9B.B8",
+"2015-01-15",
+"2015-12-31",
+"22:00",
+"24:00",
 7,
 "days"));
 wizneko_events = wizneko_events.concat(gen_repeat_event_array(
@@ -515,6 +551,15 @@ wizneko_events = wizneko_events.concat(gen_repeat_event_array(
 7,
 "days"));
 wizneko_events = wizneko_events.concat(gen_repeat_event_array(
+"魔導書(水)",
+"http://zh.nekowiz.wikia.com/wiki/%E7%B7%8A%E6%80%A5%E4%BB%BB%E5%8B%99#.E9.9D.92.E8.89.B2.E7.A5.9E.E7.A5.95.E7.9A.84.E6.B7.B1.E6.B5.B7.E4.B9.8B.E6.9B.B8",
+"2015-01-16",
+"2015-12-31",
+"22:00",
+"24:00",
+7,
+"days"));
+wizneko_events = wizneko_events.concat(gen_repeat_event_array(
 "魔導書(雷)",
 "http://zh.nekowiz.wikia.com/wiki/%E7%B7%8A%E6%80%A5%E4%BB%BB%E5%8B%99#.E9.BB.83.E8.89.B2.E8.BC.9D.E7.85.8C.E7.9A.84.E5.85.89.E8.BC.9D.E4.B9.8B.E6.9B.B8",
 "2015-01-17",
@@ -551,6 +596,15 @@ wizneko_events = wizneko_events.concat(gen_repeat_event_array(
 7,
 "days"));
 wizneko_events = wizneko_events.concat(gen_repeat_event_array(
+"魔導書(雷)",
+"http://zh.nekowiz.wikia.com/wiki/%E7%B7%8A%E6%80%A5%E4%BB%BB%E5%8B%99#.E9.BB.83.E8.89.B2.E8.BC.9D.E7.85.8C.E7.9A.84.E5.85.89.E8.BC.9D.E4.B9.8B.E6.9B.B8",
+"2015-01-17",
+"2015-12-31",
+"22:00",
+"24:00",
+7,
+"days"));
+wizneko_events = wizneko_events.concat(gen_repeat_event_array(
 "魔導書(全)",
 "http://zh.nekowiz.wikia.com/wiki/%E7%B7%8A%E6%80%A5%E4%BB%BB%E5%8B%99",
 "2015-01-18",
@@ -584,5 +638,14 @@ wizneko_events = wizneko_events.concat(gen_repeat_event_array(
 "2015-12-31",
 "19:00",
 "21:00",
+7,
+"days"));
+wizneko_events = wizneko_events.concat(gen_repeat_event_array(
+"魔導書(全)",
+"http://zh.nekowiz.wikia.com/wiki/%E7%B7%8A%E6%80%A5%E4%BB%BB%E5%8B%99",
+"2015-01-18",
+"2015-12-31",
+"22:00",
+"24:00",
 7,
 "days"));
