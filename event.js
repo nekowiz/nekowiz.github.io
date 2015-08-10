@@ -26,109 +26,32 @@ function gen_repeat_event_array(title, url, start_date, end_date, start_time, en
 
 var wizneko_events = [
 {
-	title: "珍妮佛的冒險",
-	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E7%8F%8D%E5%A6%AE%E4%BD%9B%E7%9A%84%E5%86%92%E9%9A%AA",
-	start: "2015-01-14",
-	end: "2015-02-13",
-	backgroundColor: "green"
-},
-{
 	title: "Dragon's Blader",
 	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/Dragon%27s_Blader",
-	start: "2015-01-23",
-	end: "2015-02-05",
-	backgroundColor: "DarkBlue"
-},
-{
-	title: "庫洛姆‧麥格納魔導學園",
-	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E5%BA%AB%E6%B4%9B%E5%A7%86%E2%80%A7%E9%BA%A5%E6%A0%BC%E7%B4%8D%E9%AD%94%E5%B0%8E%E5%AD%B8%E5%9C%92",
-	start: "2015-01-30",
-	end: "2015-02-12",
-	backgroundColor: "DarkRed"
-},
-{
-	title: "巧克力森林",
-	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E5%B7%A7%E5%85%8B%E5%8A%9B%E6%A3%AE%E6%9E%97",
-	start: "2015-02-05",
-	end: "2015-02-16",
-	backgroundColor: "DarkBlue"
-},
-{
-	title: "異界神的祝福試煉",
-	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E7%95%B0%E7%95%8C%E7%A5%9E%E7%9A%84%E7%A5%9D%E7%A6%8F%E8%A9%A6%E7%85%89",
-	start: "2015-02-16",
-	end: "2015-03-06",
-	backgroundColor: "green"
-},
-{
-	title: "桃娘傳",
-	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E6%A1%83%E5%A8%98%E5%82%B3",
-	start: "2015-02-26",
-	end: "2015-03-19",
-	backgroundColor: "DarkBlue"
-},
-{
-	title: "珍妮佛的冒險",
-	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E7%8F%8D%E5%A6%AE%E4%BD%9B%E7%9A%84%E5%86%92%E9%9A%AA",
-	start: "2015-03-05",
-	end: "2015-03-25",
-	backgroundColor: "green"
-},
-{
-	title: "神龍降臨",
-	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E7%A5%9E%E9%BE%8D%E9%99%8D%E8%87%A8",
-	start: "2015-03-12",
-	end: "2015-04-01",
-	backgroundColor: "DarkRed"
-},
-{
-	title: "歌頌永恆的克羅諾斯",
-	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E6%AD%8C%E9%A0%8C%E6%B0%B8%E6%81%86%E7%9A%84%E5%85%8B%E7%BE%85%E8%AB%BE%E6%96%AF",
-	start: "2015-03-25",
-	end: "2015-04-15",
-	backgroundColor: "green"
-},
-{
-	title: "Dragon's Blader",
-	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/Dragon%27s_Blader",
-	start: "2015-04-01",
-	end: "2015-04-07",
-	backgroundColor: "DarkBlue"
-},
-{
-	title: "庫洛姆‧麥格納Ⅰ魔導學園",
-	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E5%BA%AB%E6%B4%9B%E5%A7%86%E2%80%A7%E9%BA%A5%E6%A0%BC%E7%B4%8D%E2%85%A0%E9%AD%94%E5%B0%8E%E5%AD%B8%E5%9C%92",
-	start: "2015-04-01",
-	end: "2015-04-22",
-	backgroundColor: "DarkRed"
-},
-{
-	title: "庫洛姆‧麥格納Ⅱ學園祭",
-	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E5%BA%AB%E6%B4%9B%E5%A7%86%E2%80%A7%E9%BA%A5%E6%A0%BC%E7%B4%8D%E2%85%A1%E5%AD%B8%E5%9C%92%E7%A5%AD",
-	start: "2015-04-01",
-	end: "2015-04-22",
-	backgroundColor: "Gray"
-},
-{
-	title: "TVCF開播慶祝活動",
-	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/TVCF%E9%96%8B%E6%92%AD%E6%85%B6%E7%A5%9D%E6%B4%BB%E5%8B%95",
-	start: "2015-04-01",
-	end: "2015-04-07",
-	backgroundColor: "DarkGreen"
-},
-{
-	title: "巧克力森林",
-	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E5%B7%A7%E5%85%8B%E5%8A%9B%E6%A3%AE%E6%9E%97",
-	start: "2015-04-15",
-	end: "2015-05-06",
+	start: "2015-08-05",
+	end: "2015-08-12",
 	backgroundColor: "DarkBlue"
 },
 {
 	title: "妖精花園",
 	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E5%A6%96%E7%B2%BE%E8%8A%B1%E5%9C%92",
-	start: "2015-04-21",
-	end: "2015-05-12",
+	start: "2015-07-29",
+	end: "2015-08-18",
 	backgroundColor: "DarkGreen"
+},
+{
+	title: "和白貓夥伴們一起冒險喵！",
+	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E5%A6%96%E7%B2%BE%E8%8A%B1%E5%9C%92",
+	start: "2015-08-05",
+	end: "2015-09-02",
+	backgroundColor: "green"
+},
+{
+	title: "香港補習天王",
+	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E5%A6%96%E7%B2%BE%E8%8A%B1%E5%9C%92",
+	start: "2015-07-22",
+	end: "2015-08-12",
+	backgroundColor: "gray"
 }
 ];
 // green, DarkBlue, DarkRed, gray, DarkGreen 
