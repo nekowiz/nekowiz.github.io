@@ -41,14 +41,14 @@ var wizneko_events = [
 },
 {
 	title: "和白貓夥伴們一起冒險喵！",
-	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E5%A6%96%E7%B2%BE%E8%8A%B1%E5%9C%92",
+	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E5%92%8C%E7%99%BD%E8%B2%93%E5%A4%A5%E4%BC%B4%E5%80%91%E4%B8%80%E8%B5%B7%E5%86%92%E9%9A%AA%E5%96%B5%EF%BC%81",
 	start: "2015-08-05",
 	end: "2015-09-02",
 	backgroundColor: "green"
 },
 {
 	title: "香港補習天王",
-	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E5%A6%96%E7%B2%BE%E8%8A%B1%E5%9C%92",
+	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E9%A6%99%E6%B8%AF%E8%A3%9C%E7%BF%92%E5%A4%A9%E7%8E%8B",
 	start: "2015-07-22",
 	end: "2015-08-12",
 	backgroundColor: "gray"
