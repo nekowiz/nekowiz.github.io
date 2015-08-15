@@ -22,7 +22,7 @@ function gen_repeat_event_array(title, url, start_date, end_date, start_time, en
 		current_m.add(repeat_range, repeat_string);
 	}
 	return result;
-}
+} 
 
 var wizneko_events = [
 {
