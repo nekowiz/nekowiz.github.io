@@ -22,7 +22,7 @@ function gen_repeat_event_array(title, url, start_date, end_date, start_time, en
 		current_m.add(repeat_range, repeat_string);
 	}
 	return result;
-}
+} 
 
 var wizneko_events = [
 {
@@ -52,6 +52,13 @@ var wizneko_events = [
 	start: "2015-08-12",
 	end: "2015-09-02",
 	backgroundColor: "Chocolate"
+}
+{
+	title: "古代森林的千年櫻花",
+	url: "http://zh.nekowiz.wikia.com/wiki/%E6%B4%BB%E5%8B%95%E4%BB%BB%E5%8B%99/%E5%8F%A4%E4%BB%A3%E6%A3%AE%E6%9E%97%E7%9A%84%E5%8D%83%E5%B9%B4%E6%AB%BB%E8%8A%B1",
+	start: "2015-08-19",
+	end: "2015-09-09",
+	backgroundColor: "Cornsilk"
 }
 ];
 // green, DarkBlue, DarkRed, gray, DarkGreen 
