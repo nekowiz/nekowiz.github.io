@@ -23,7 +23,7 @@ function gen_repeat_event_array(title, url, start_date, end_date, start_time, en
 	}
 	return result;
 }
- 
+
 var wizneko_events = [
 {
 	title: "Dragon's Blader",
